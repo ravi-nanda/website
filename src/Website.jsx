@@ -14,16 +14,18 @@ import { HashLoader } from "react-spinners";
 // import Nav from "./Nav";
 
 const Website = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [callData, setCallData] = useState();
 
   const [counts, setCounts] = useState();
   const callApi = async (skip) => {
     try {
+      setLoading(true);
       const res = await axios.get(
         `https://dummyjson.com/products?limit=10&skip=${skip}`
       );
+      setLoading(false);
       const data = res.data;
       setCallData(data.products);
 
@@ -32,11 +34,11 @@ const Website = () => {
       console.log("error404");
     }
   };
-  useEffect(() => {
-    setInterval(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setLoading(false);
+  //   }, 3000);
+  // }, []);
 
   useEffect(() => {
     callApi(0);
